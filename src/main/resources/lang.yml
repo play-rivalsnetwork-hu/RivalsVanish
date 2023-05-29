@@ -1,0 +1,16 @@
+messages:
+  reload: "&f㑉 &x&4&4&D&A&F&F&lRivals &7» &aSikeres újratöltés! &7(&f%time%&7)"
+  vanish: '&f㑉 &x&4&4&D&A&F&F&lRivals &7» &fMostantól láthatatlan vagy!'
+  unvanish: '&f㑉 &x&4&4&D&A&F&F&lRivals &7» &fMár nem vagy láthatatlan!'
+  join-vanished: '&x&4&4&D&A&F&F&lVanish &c» &x&4&4&D&A&F&F%player%&f Vanishben csatlakozott.'
+  left-vanished: '&x&4&4&D&A&F&F&lVanish &c»&x&4&4&D&A&F&F %player%&f Vanishben lépett le.'
+  fakejoin: ''
+  fakeleave: ''
+  actionbar: '&f㑉 &7| &x&4&4&D&A&F&FLáthatatlanság bekapcsolva'
+  took-vanish: '%player%'
+  error: '&f㑉 &7| &c%player% &fvanisben lépett fel, de nincsen hozzá joga!'
+  no-permission: '&f㑉 &7| &cNincs jogod megváltoztatni ennek a játékosnak a láthatóságát!'
+  unvanish-other: "&f㑉 &x&4&4&D&A&F&F&lRivals &7» &x&4&4&D&A&F&F%player%&f játékos már látható!"
+  vanish-other: "&f㑉 &x&4&4&D&A&F&F&lRivals &7» &x&4&4&D&A&F&F%player%&f játékos jelenleg láthatatlan!"
+
+config-version: 1

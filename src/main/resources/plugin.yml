@@ -1,0 +1,9 @@
+name: RivalsVanish
+version: '0.1'
+main: hu.rivalsnetwork.rivalsvanish.RivalsVanishPlugin
+api-version: 1.18
+depend:
+  - RivalsAPI
+
+loadbefore:
+  - Essentials

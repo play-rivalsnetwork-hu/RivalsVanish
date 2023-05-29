@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+group = 'hu.rivalsnetwork.rivalsvanish'
+version = file("version").readLines().get(0)
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = 'PaperMC'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+
+    maven {
+        name = 'Jitpack'
+        url = 'https://jitpack.io/'
+    }
+}
+
+dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("com.github.play-rivalsnetwork-hu:RivalsAPI:release2:dev-all")
+}
+
+tasks.register('bumpBuildNumber') {
+    file("version").write("${file("version").readLines().get(0).toInteger() + 1}")
+}
+
+build {
+    bumpBuildNumber
+}
+
+tasks.jar {
+    archiveFileName.set("RivalsVanish-build-${version}.jar")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
