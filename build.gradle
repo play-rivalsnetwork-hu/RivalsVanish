@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-    compileOnly("com.github.play-rivalsnetwork-hu:RivalsAPI:release2:dev-all")
+    compileOnly("com.github.play-rivalsnetwork-hu:RivalsAPI:Build-v35:dev-all")
 }
 
 tasks.register('bumpBuildNumber') {

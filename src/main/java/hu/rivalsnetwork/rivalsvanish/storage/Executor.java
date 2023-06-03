@@ -1,13 +1,9 @@
 package hu.rivalsnetwork.rivalsvanish.storage;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.UpdateOptions;
-import hu.rivalsnetwork.rivalsapi.storage.Storage;
+import hu.rivalsnetwork.rivalsapi.users.Key;
+import hu.rivalsnetwork.rivalsapi.users.User;
 import hu.rivalsnetwork.rivalsapi.utils.StringUtils;
 import hu.rivalsnetwork.rivalsvanish.RivalsVanishPlugin;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -30,18 +26,9 @@ public class Executor {
 
         player.sendMessage(StringUtils.format(RivalsVanishPlugin.LANG.getString("messages.vanish").replace("%player%", player.getName())));
 
-        Storage.mongo(database -> {
-            MongoCollection<Document> collection = database.getCollection("vanished-players");
-            Document document = new Document();
-            document.put("uuid", player.getUniqueId().toString());
-            document.put("name", player.getName());
-            document.put("vanished", true);
-            Document filter = new Document();
-            Document updateDocument = new Document();
-            updateDocument.put("$set", document);
-            filter.put("uuid", player.getUniqueId().toString());
-
-            collection.updateOne(filter, updateDocument, new UpdateOptions().upsert(true));
+        RivalsVanishPlugin.getInstance().executor().execute(() -> {
+            User user = RivalsVanishPlugin.getInstance().getUser(player);
+            user.write("vanished-players", User.DataType.MONGODB, Key.of("vanished", true));
         });
     }
 
@@ -57,37 +44,21 @@ public class Executor {
 
         player.sendMessage(StringUtils.format(RivalsVanishPlugin.LANG.getString("messages.unvanish").replace("%player%", player.getName())));
 
-        Storage.mongo(database -> {
-            MongoCollection<Document> collection = database.getCollection("vanished-players");
-            Document document = new Document();
-            document.put("uuid", player.getUniqueId().toString());
-            document.put("name", player.getName());
-            document.put("vanished", false);
-            Document filter = new Document();
-            Document updateDocument = new Document();
-            updateDocument.put("$set", document);
-            filter.put("uuid", player.getUniqueId().toString());
-
-            collection.updateOne(filter, updateDocument, new UpdateOptions().upsert(true));
+        RivalsVanishPlugin.getInstance().executor().execute(() -> {
+            User user = RivalsVanishPlugin.getInstance().getAPI().getUser(player);
+            user.write("vanished-players", User.DataType.MONGODB, Key.of("vanished", false));
         });
     }
 
     public static boolean isHidden(@NotNull final Player player) {
-        boolean[] hidden = {false};
-        Storage.mongo(database -> {
-            MongoCollection<Document> collection = database.getCollection("vanished-players");
-            Document searchQuery = new Document();
-            searchQuery.put("uuid", player.getUniqueId().toString());
-            FindIterable<Document> cursor = collection.find(searchQuery);
+        boolean hidden;
+        User user = RivalsVanishPlugin.getInstance().getUser(player);
+        Object h = user.read(Key.of("vanished-players", "vanished"), User.DataType.MONGODB);
+        if (h != null) {
+            hidden = (boolean) h;
+        } else hidden = false;
 
-            try (final MongoCursor<Document> cursorIterator = cursor.cursor()) {
-                if (cursorIterator.hasNext()) {
-                    Document doc = cursorIterator.next();
-                    hidden[0] = doc.getBoolean("vanished");
-                }
-            }
-        });
-        return hidden[0];
+        return hidden;
     }
 
     public static void hideFromPlayers(@NotNull final Player player) {
