@@ -45,7 +45,7 @@ public class Executor {
         player.sendMessage(StringUtils.format(RivalsVanishPlugin.LANG.getString("messages.unvanish").replace("%player%", player.getName())));
 
         RivalsVanishPlugin.getInstance().executor().execute(() -> {
-            User user = RivalsVanishPlugin.getInstance().getAPI().getUser(player);
+            User user = RivalsVanishPlugin.getInstance().getUser(player);
             user.write("vanished-players", User.DataType.MONGODB, Key.of("vanished", false));
         });
     }
