@@ -63,7 +63,7 @@ public class Executor {
 
     public static void hideFromPlayers(@NotNull final Player player) {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (player.hasPermission("rivalsvanish.see")) continue;
+            if (p.hasPermission("rivalsvanish.see")) continue;
 
             p.hidePlayer(RivalsVanishPlugin.getInstance(), player);
         }
