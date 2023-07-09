@@ -5,14 +5,17 @@ import hu.rivalsnetwork.rivalsapi.users.User;
 import hu.rivalsnetwork.rivalsapi.utils.StringUtils;
 import hu.rivalsnetwork.rivalsvanish.RivalsVanishPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Executor {
     public static final ArrayList<Player> vanishedPlayers = new ArrayList<>();
+    public static final HashMap<Player, GameMode> lastGamemode = new HashMap<>();
 
     public static void hide(@NotNull final Player player) {
         hideFromPlayers(player);

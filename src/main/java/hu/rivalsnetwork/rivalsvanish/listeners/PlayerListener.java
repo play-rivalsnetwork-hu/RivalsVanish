@@ -65,6 +65,7 @@ public class PlayerListener implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) return;
 
         if (Executor.vanishedPlayers.contains(event.getPlayer())) {
+            Executor.lastGamemode.put(event.getPlayer(), event.getPlayer().getGameMode());
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
         }
     }
@@ -72,7 +73,8 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onInventoryCloseEvent(@NotNull final InventoryCloseEvent event) {
         if (Executor.vanishedPlayers.contains(event.getPlayer())) {
-            event.getPlayer().setGameMode(GameMode.CREATIVE);
+
+            event.getPlayer().setGameMode(Executor.lastGamemode.get(event.getPlayer()));
         }
     }
 }
